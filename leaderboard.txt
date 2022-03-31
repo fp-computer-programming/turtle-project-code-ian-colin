@@ -1,0 +1,4 @@
+
+ None         <turtle.Turtle object at 0x10eaac9a0>
+ None         <turtle.Turtle object at 0x109a409a0>
+ None         <turtle.Turtle object at 0x1039d49a0>

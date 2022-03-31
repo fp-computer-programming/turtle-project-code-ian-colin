@@ -4,15 +4,21 @@ import turtle
 import time
 import random
 
-turtle.colormode(255)
 name = input("What is your name? ")
 window = turtle.Screen()
-window.screensize(500, 500)
+window.setup(height=600, width=600)
+turtle.colormode(255)
 window.bgcolor(105, 224, 49)
 window.title("{0}'s Snake Game".format(name))
 
 score = 0
 high_score = 0
+leaderboard = open("/Users/p22inolan/Desktop/project/turtle-project-code-ian-colin/leaderboard.txt", "a")
+with open("/Users/p22inolan/Desktop/project/turtle-project-code-ian-colin/leaderboard.txt") as f:
+    first_line = f.readline().strip()
+    if first_line == "\n":
+        leaderboard.write("INITIALS     SCORE")
+
 
 head = turtle.Turtle()
 head.shape("square")
@@ -20,11 +26,11 @@ color = turtle.textinput("Color", "What color should the snake be?")
 speed = turtle.textinput("Difficulty", "Enter Easy, Medium, or Hard.")
 speed.islower()
 if speed == "easy":
-    head.speed(3)
+    head.speed(1)
 if speed == "medium":
-    head.speed(6)
+    head.speed(2)
 if speed == "hard":
-    head.speed(9)
+    head.speed(3)
 head.color(color)
 head.penup()
 head.goto(0, 0)
@@ -61,16 +67,16 @@ def snake_right():
 def movement():
     if head.heading == 90:
         y = head.ycor()
-        head.sety(y+10)
+        head.sety(y+20)
     if head.heading == 270:
         y = head.ycor()
-        head.sety(y-10)
+        head.sety(y-20)
     if head.heading == 180:
         x = head.xcor()
-        head.sety(x+10)
+        head.setx(x-20)
     if head.heading == 0:
         x = head.xcor()
-        head.sety(x-10)
+        head.setx(x+20)
 
 window.listen()
 window.onkeypress(snake_up, "w")
@@ -82,6 +88,17 @@ body = []
 
 while True:
     window.update()
+    if head.xcor() > 280 or head.xcor() < -280 or head.ycor() > 280 or head.ycor() < -280:
+        head.color("red")
+        time.sleep(1)
+        head.penup
+        head.goto(0,0)
+        initials = window.textinput("Game Over!", "Enter your initials:")
+        leaderboard.write("\n {0}         {1}".format(initials, score))
+        turtle.bye()
+    for segment in segments:
+        segment.goto(1000, 1000)
+    
     movement()
 
 window.mainloop()
