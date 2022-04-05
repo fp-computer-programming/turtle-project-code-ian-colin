@@ -16,13 +16,14 @@ high_score = 0
 leaderboard = open("/Users/p22inolan/Desktop/project/turtle-project-code-ian-colin/leaderboard.txt", "a")
 with open("/Users/p22inolan/Desktop/project/turtle-project-code-ian-colin/leaderboard.txt") as f:
     first_line = f.readline().strip()
-    if first_line == "\n":
+    if first_line == "":
         leaderboard.write("INITIALS     SCORE")
 
 head = turtle.Turtle()
 head.shape("square")
 color = turtle.textinput("Color", "What color should the snake be?")
 speed = turtle.textinput("Difficulty", "Enter Easy, Medium, or Hard.")
+shape = turtle.textinput("Shape", "What shape should the snake be?")
 speed.islower()
 if speed == "easy":
     head.speed(1)
@@ -31,6 +32,7 @@ if speed == "medium":
 if speed == "hard":
     head.speed(3)
 head.color(color)
+head.shape(shape)
 head.penup()
 head.goto(0, 0)
 
@@ -110,10 +112,28 @@ while True:
         scoreboard.clear()
         scoreboard.write("Score: {0}  High Score: {1}".format(score, high_score), align="center", font=("Comic Sans", 24, "bold"))
         initials = window.textinput("Game Over!", "Enter your initials:")
-        leaderboard.write("\n {0}         {1}".format(initials, score))
+        leaderboard.write("\n{0}         {1}".format(initials, score))
+        
         play_again = window.textinput("Game Over!", "Do you want to play again? (Y/N)")
         play_again.isupper()
-        turtle.bye()
+        if play_again == "N":
+            turtle.bye()
+        if play_again == "Y":
+            turtle.bye()
+            print("Please relaunch the game to play again.")
+        else:
+            error = window.textinput("Invalid Input", "Please enter either Y or N. Type OK to continue.")
+            error.isupper()
+            if error == "OK":
+                play_again = window.textinput("Game Over!", "Do you want to play again? (Y/N)")
+                play_again.isupper()
+                if play_again == "N":
+                    turtle.bye()
+                elif play_again == "Y":
+                    turtle.bye()
+            else:
+                turtle.bye()
+                print("You're really bad at following instructions.")
     
     if head.distance(food) < 20:
         x = random.randint(-270, 270)
@@ -136,11 +156,14 @@ while True:
         x = body[index-1].xcor()
         y = body[index-1].ycor()
         body[index].goto(x, y)
+
     if len(body) > 0:
         x = head.xcor()
         y = head.ycor()
         body[0].goto(x, y)
+
     movement()
+
     for segment in body:
         if segment.distance(head) < 20:
             head.color("red")
@@ -153,18 +176,28 @@ while True:
             scoreboard.clear()
             scoreboard.write("Score: {0}  High Score: {1}".format(score, high_score), align="center", font=("Comic Sans", 24, "bold"))
             initials = window.textinput("Game Over!", "Enter your initials:")
-            leaderboard.write("\n {0}         {1}".format(initials, score))
-    #play_again = window.textinput("Try Again?", "Do you want to play again? (Y/N)")
-    #play_again.isupper
+            leaderboard.write("\n{0}         {1}".format(initials, score))
 
-   # if play_again == "N":
-    #    turtle.bye()
-   # if play == "N":
-   #     turtle.bye()
-   # elif play != "Y" or "N":
-    #    error = window.textinput("Invalid", "Please enter either Y or N. Type OK to continue.")
-    #    error.isupper()
-    #    if error == "OK":
-    #        play
+            play_again = window.textinput("Game Over!", "Do you want to play again? (Y/N)")
+            play_again.isupper()
+            if play_again == "N":
+                turtle.bye()
+            elif play_again == "Y":
+                turtle.bye()
+                print("Please relaunch the game to play again.")
+            else:
+                error = window.textinput("Invalid Input", "Please enter either Y or N. Type OK to continue.")
+                error.isupper()
+                if error == "OK":
+                    play_again = window.textinput("Game Over!", "Do you want to play again? (Y/N)")
+                    play_again.isupper()
+                    if play_again == "N":
+                        turtle.bye()
+                    elif play_again == "Y":
+                        turtle.bye()
+                else:
+                    turtle.bye()
+                    print("You're really bad at following instructions.")
+
 
 window.mainloop()

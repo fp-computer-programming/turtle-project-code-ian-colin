@@ -1,2 +1,8 @@
-
- AAA         280
+INITIALS     SCORE
+BBB         70
+NNN         70
+BBB         80
+AAA         10
+AAA         30
+BBB         50
+BBB         80
